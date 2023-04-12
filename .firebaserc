@@ -1,0 +1,14 @@
+{
+  "targets": {
+    "awesome-lists-mr": {
+      "hosting": {
+        "awesome-lists": [
+          "awesome-lists-mr"
+        ]
+      }
+    }
+  },
+  "projects": {
+    "default": "awesome-lists-mr"
+  }
+}
