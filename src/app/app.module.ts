@@ -11,10 +11,15 @@ import { provideFirestore,getFirestore } from '@angular/fire/firestore';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { HomeComponent } from './home/home.component';
 
+import { NgbDropdownModule } from '@ng-bootstrap/ng-bootstrap';
+import { TopicComponent } from './topic/topic.component';
+import { DragDropModule } from '@angular/cdk/drag-drop';
+
 @NgModule({
   declarations: [
     AppComponent,
-    HomeComponent
+    HomeComponent,
+    TopicComponent
   ],
   imports: [
     BrowserModule,
@@ -23,7 +28,9 @@ import { HomeComponent } from './home/home.component';
     provideAuth(() => getAuth()),
     provideDatabase(() => getDatabase()),
     provideFirestore(() => getFirestore()),
-    NgbModule
+    NgbModule,
+    NgbDropdownModule,
+    DragDropModule
   ],
   providers: [],
   bootstrap: [AppComponent]
