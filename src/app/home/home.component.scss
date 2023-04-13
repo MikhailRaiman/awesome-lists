@@ -1,0 +1,9 @@
+.topic-card {
+  width: 100%;
+}
+
+@media (min-width: 768px) {
+  .topic-card {
+    width: 50%;
+  }
+}
