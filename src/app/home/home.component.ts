@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { NgbOffcanvas } from '@ng-bootstrap/ng-bootstrap';
 import { Topic } from '../models/topic.model';
 import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
+import { DataService } from '../data.service';
 
 @Component({
   selector: 'app-home',
@@ -9,20 +10,13 @@ import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
   styleUrls: ['./home.component.scss']
 })
 export class HomeComponent implements OnInit {
-  data: Topic[] = [
-    {id: "1", name: 'Card1'},
-    {id: "2", name: 'Card2'},
-    {id: "3", name: 'Card3'},
-    {id: "4", name: 'Card4'},
-    {id: "5", name: 'Card5'},
-    {id: "6", name: 'Card6'},
-    {id: "7", name: 'Card7'},
-    {id: "8", name: 'Card8'}
-  ];
-  closeResult = '';
-  constructor(private offcanvasService: NgbOffcanvas) { }
+  data: Topic[] = [];
+  constructor(private offcanvasService: NgbOffcanvas, public ds: DataService) { }
 
   ngOnInit(): void {
+    this.ds.topics$.subscribe(res => {
+      this.data = res;
+    })
   }
 
   open(content: any) {
@@ -30,21 +24,27 @@ export class HomeComponent implements OnInit {
 	}
 
   addTopic(nameControl: any) {
-    const card = new Topic(nameControl.value)
-    this.data.push(card);
+    const t = new Topic(nameControl.value);
+    this.ds.addTopic(t);
     nameControl.value = "";
   }
 
   deleteTopic(topic: Topic) {
-    const topicForDeleteIndex = this.data.findIndex(t => t.id === topic.id);
-    this.data.splice(topicForDeleteIndex, 1);
+    this.ds.deleteTopic(topic);
+    // const topicForDeleteIndex = this.data.findIndex(t => t.id === topic.id);
+    // this.data.splice(topicForDeleteIndex, 1);
   }
 
-  makeFavourite(topic: Topic) {
-    const favouriteTopic = this.data.find(t => t.id === topic.id);
-    if (favouriteTopic && !favouriteTopic.favourite) {
-      this.data.forEach(t => t.favourite = false);
-      favouriteTopic.favourite = true;
+  makeFavourite(topicId: string) {
+    const prevFavouriteTopic = this.data.find(t => t.favourite);
+    if (prevFavouriteTopic) {
+      prevFavouriteTopic.favourite = false;
+      this.ds.updateTopic(prevFavouriteTopic);
+    }
+    const topicToUpdate = this.data.find(t => t.id === topicId);
+    if (topicToUpdate) {
+      topicToUpdate.favourite = true;
+      this.ds.updateTopic(topicToUpdate!);
     }
   }
 
