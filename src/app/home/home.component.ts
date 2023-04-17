@@ -3,6 +3,7 @@ import { NgbOffcanvas } from '@ng-bootstrap/ng-bootstrap';
 import { Topic } from '../models/topic.model';
 import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 import { DataService } from '../data.service';
+import { AuthService } from '../auth/auth.service';
 
 @Component({
   selector: 'app-home',
@@ -11,7 +12,7 @@ import { DataService } from '../data.service';
 })
 export class HomeComponent implements OnInit {
   data: Topic[] = [];
-  constructor(private offcanvasService: NgbOffcanvas, public ds: DataService) { }
+  constructor(private offcanvasService: NgbOffcanvas, public ds: DataService, public auth: AuthService) { }
 
   ngOnInit(): void {
     this.ds.topics$.subscribe(res => {
@@ -19,14 +20,25 @@ export class HomeComponent implements OnInit {
     })
   }
 
+  logout() {
+    try {
+      this.offcanvasService.dismiss();
+      //this.auth.logout();
+    } catch(err) {
+      console.error(err);
+    }
+  }
+
   open(content: any) {
 		this.offcanvasService.open(content, { ariaLabelledBy: 'offcanvas-basic-title' });
 	}
 
   addTopic(nameControl: any) {
-    const t = new Topic(nameControl.value);
-    this.ds.addTopic(t);
-    nameControl.value = "";
+    if (nameControl.value !== "") {
+      const t = new Topic(nameControl.value);
+      this.ds.addTopic(t);
+      nameControl.value = "";
+    }
   }
 
   deleteTopic(topic: Topic) {
@@ -46,6 +58,10 @@ export class HomeComponent implements OnInit {
       topicToUpdate.favourite = true;
       this.ds.updateTopic(topicToUpdate!);
     }
+  }
+
+  changeProfileName(nameControl: any) {
+
   }
 
   drop(event: CdkDragDrop<string[]>) {

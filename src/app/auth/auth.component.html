@@ -1,0 +1,25 @@
+<div class="mw-100 vh-100 d-flex flex-column justify-content-center align-items-center text-bg-light">
+  <div class="card px-5">
+    <div class="card-body text-center">
+      <h3 class="card-title">Awesome Lists {{auth.loginMode}}</h3>
+      <p class="card-subtitle mb-2 text-body-secondary">Your main tool to organize lists</p>
+      <form [formGroup]="form">
+        <div class="mb-3">
+          <input *ngIf="auth.loginMode === 'Register'" class="form-control" required type="text" placeholder="Name" formControlName="name">
+        </div>
+        <div class="mb-3">
+          <input type="email" class="form-control" id="email" placeholder="Email" formControlName="email">
+        </div>
+        <div class="mb-3">
+          <input type="password" class="form-control" id="password" placeholder="Password" formControlName="password">
+        </div>
+        <div class="d-grid gap-2 col-8 mx-auto mb-4">
+          <button type="button" class="btn btn-outline-primary" (click)="handleButtonClick()">{{buttonText}}</button>
+        </div>
+      </form>
+      <!-- <div>Forgot password?</div> -->
+      <div *ngIf="auth.loginMode === 'Login'" (click)="switchForm('Register')" role="button">Register for free</div>
+      <div *ngIf="auth.loginMode !== 'Login'" (click)="switchForm('Login')" role="button">Back to Login</div>
+    </div>
+  </div>
+</div>
