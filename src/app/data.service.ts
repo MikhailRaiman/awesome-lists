@@ -1,8 +1,9 @@
 import { Injectable } from "@angular/core";
 import { inject } from '@angular/core';
-import { Firestore, collectionData, collection, doc, setDoc, addDoc, updateDoc, deleteDoc } from '@angular/fire/firestore';
+import { Firestore, collectionData, collection, doc, setDoc, addDoc, updateDoc, deleteDoc, where, query, getDocs } from '@angular/fire/firestore';
 import { Observable } from 'rxjs';
 import { Topic } from "./models/topic.model";
+import { AuthService } from "./auth/auth.service";
 
 @Injectable({
   providedIn: 'root',
@@ -11,9 +12,12 @@ export class DataService {
     topics$!: Observable<Topic[]>;
     firestore: Firestore = inject(Firestore);
 
-    constructor() {
+    constructor(private auth: AuthService) {}
+
+    async getUserTopics() {
       const itemCollection = collection(this.firestore, 'topics');
-      this.topics$ = collectionData(itemCollection) as Observable<Topic[]>;
+      const q = query(collection(this.firestore, "topics"), where("owner", "==", this.auth.user!.uid));
+      this.topics$ = collectionData(q) as Observable<Topic[]>;
     }
 
     async addTopic(t: Topic) {

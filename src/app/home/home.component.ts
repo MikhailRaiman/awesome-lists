@@ -15,6 +15,7 @@ export class HomeComponent implements OnInit {
   constructor(private offcanvasService: NgbOffcanvas, public ds: DataService, public auth: AuthService) { }
 
   ngOnInit(): void {
+    this.ds.getUserTopics();
     this.ds.topics$.subscribe(res => {
       this.data = res;
     })
@@ -35,7 +36,7 @@ export class HomeComponent implements OnInit {
 
   addTopic(nameControl: any) {
     if (nameControl.value !== "") {
-      const t = new Topic(nameControl.value);
+      const t = new Topic(nameControl.value, this.auth.user!.uid);
       this.ds.addTopic(t);
       nameControl.value = "";
     }
