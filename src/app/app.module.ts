@@ -16,11 +16,14 @@ import { NgbDropdownModule } from '@ng-bootstrap/ng-bootstrap';
 import { TopicComponent } from './topic/topic.component';
 import { DragDropModule } from '@angular/cdk/drag-drop';
 
+import { WiseColorDirective } from '../app/topic/wise-color.directive';
+
 @NgModule({
   declarations: [
     AppComponent,
     HomeComponent,
-    TopicComponent
+    TopicComponent,
+    WiseColorDirective
   ],
   imports: [
     BrowserModule,

@@ -17,8 +17,13 @@ export class HomeComponent implements OnInit {
   ngOnInit(): void {
     this.ds.getUserTopics();
     this.ds.topics$.subscribe(res => {
-      this.data = res;
+      console.log(res);
+      this.data = this.sortBy(res, 'order');
     })
+  }
+
+  sortBy(arr: any[], prop: string) {
+    return arr.sort((a, b) => a[prop] > b[prop] ? 1 : a[prop] === b[prop] ? 0 : -1);
   }
 
   logout() {
@@ -66,6 +71,12 @@ export class HomeComponent implements OnInit {
   }
 
   drop(event: CdkDragDrop<string[]>) {
+    console.log(event);
+    const currOrder = this.data[event.currentIndex].order;
+    this.data[event.currentIndex].order = this.data[event.previousIndex].order;
+    this.data[event.previousIndex].order = currOrder;
+    this.ds.updateTopic(this.data[event.currentIndex]);
+    this.ds.updateTopic(this.data[event.previousIndex]);
     moveItemInArray(this.data, event.previousIndex, event.currentIndex);
   }
 }

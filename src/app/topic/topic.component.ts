@@ -1,5 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Topic } from '../models/topic.model';
+import { getColor } from '../topic/grbhex';
 
 @Component({
   selector: 'app-topic',
@@ -16,6 +17,10 @@ export class TopicComponent implements OnInit {
   constructor() { }
 
   ngOnInit(): void {
+  }
+
+  getTextColor() {
+    return getColor(this.topic!.color)
   }
 
   deleteTopic() {

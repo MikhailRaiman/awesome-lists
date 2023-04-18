@@ -1,6 +1,6 @@
 <div class="card m-3" *ngIf="topic">
   <div class="card-header d-flex justify-content-between" [style.background-color]="topic.color">
-    <span *ngIf="!editMode" class="text-truncate fw-semibold">{{topic.name}}</span>
+    <span *ngIf="!editMode" class="text-truncate fw-semibold" [style.color]="getTextColor()">{{topic.name}}</span>
     <input type="text" *ngIf="editMode" class="text-truncate fw-semibold" [(ngModel)]="topic.name"/>
     <span>
       <input [value]="topic.color" type="color" style="width: 30px;" id="colorpicker" name="colorpicker" (change)="setTopicColor($event)"/>

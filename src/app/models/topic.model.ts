@@ -1,6 +1,7 @@
 export class Topic {
   id!: string;
   color = "#ffffff";
+  order = "";
   owner: string;
   name?: string;
   favourite?: boolean;
