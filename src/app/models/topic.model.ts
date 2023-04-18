@@ -5,6 +5,7 @@ export class Topic {
   owner: string;
   name?: string;
   favourite?: boolean;
+  n = false;
   d = false;
   c = false;
   v = false;
@@ -18,8 +19,10 @@ export class Topic {
 }
 
 export class Item {
-  name!: string;
+  ts!: string;
+  name?: string;
   category?: string;
   date?: any;
   value?: number;
+  selected = false;
 }

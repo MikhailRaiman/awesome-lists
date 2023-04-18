@@ -56,14 +56,31 @@ export class TopicComponent implements OnInit {
   }
 
   addTopicItem() {
-    console.log(this.form);
-    this.topic?.items.push({...this.form.value});
-    this.saveAction.emit(this.topic);
+    if (this.form.valid) {
+      const it = {...this.form.value};
+      it.ts = Date.now().toString();
+      this.topic?.items.push(it);
+      if (this.form.value.category) {
+        if (this.topic!.categories!.length === 0 || !this.topic!.categories!.includes(this.form.value.category)) {
+          this.topic!.categories!.push(this.form.value.category);
+        }
+      }
+      this.saveAction.emit(this.topic);
+    }
   }
 
   save() {
     this.editMode = false;
     this.saveAction.emit(this.topic);
+  }
+
+  removeItems() {
+    this.topic!.items = this.topic!.items.filter(i => !i.selected);
+    this.saveAction.emit(this.topic);
+  }
+
+  getTotalValue() {
+    return this.topic!.items!.map(itm => itm.value).reduce((pr, curr) => pr! + curr!, 0);
   }
 
 }

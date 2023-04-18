@@ -12,7 +12,7 @@ import { AuthService } from '../auth/auth.service';
 })
 export class HomeComponent implements OnInit {
   data: Topic[] = [];
-  newTopicOptions = {date: false, cat: false, val: false};
+  newTopicOptions = {date: false, cat: false, val: false, name: false};
   constructor(private offcanvasService: NgbOffcanvas, public ds: DataService, public auth: AuthService) { }
 
   ngOnInit(): void {
@@ -45,7 +45,8 @@ export class HomeComponent implements OnInit {
       t.d = this.newTopicOptions.date;
       t.c = this.newTopicOptions.cat;
       t.v = this.newTopicOptions.val;
-      this.newTopicOptions = {date: false, cat: false, val: false};
+      t.n = this.newTopicOptions.name;
+      this.newTopicOptions = {date: false, cat: false, val: false, name: false};
       this.ds.addTopic(t);
       nameControl.value = "";
     }
