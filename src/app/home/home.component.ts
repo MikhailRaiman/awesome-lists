@@ -12,12 +12,12 @@ import { AuthService } from '../auth/auth.service';
 })
 export class HomeComponent implements OnInit {
   data: Topic[] = [];
+  newTopicOptions = {date: false, cat: false, val: false};
   constructor(private offcanvasService: NgbOffcanvas, public ds: DataService, public auth: AuthService) { }
 
   ngOnInit(): void {
     this.ds.getUserTopics();
     this.ds.topics$.subscribe(res => {
-      console.log(res);
       this.data = this.sortBy(res, 'order');
     })
   }
@@ -29,7 +29,7 @@ export class HomeComponent implements OnInit {
   logout() {
     try {
       this.offcanvasService.dismiss();
-      //this.auth.logout();
+      this.auth.logout();
     } catch(err) {
       console.error(err);
     }
@@ -42,6 +42,10 @@ export class HomeComponent implements OnInit {
   addTopic(nameControl: any) {
     if (nameControl.value !== "") {
       const t = new Topic(nameControl.value, this.auth.user!.uid);
+      t.d = this.newTopicOptions.date;
+      t.c = this.newTopicOptions.cat;
+      t.v = this.newTopicOptions.val;
+      this.newTopicOptions = {date: false, cat: false, val: false};
       this.ds.addTopic(t);
       nameControl.value = "";
     }
@@ -49,8 +53,6 @@ export class HomeComponent implements OnInit {
 
   deleteTopic(topic: Topic) {
     this.ds.deleteTopic(topic);
-    // const topicForDeleteIndex = this.data.findIndex(t => t.id === topic.id);
-    // this.data.splice(topicForDeleteIndex, 1);
   }
 
   makeFavourite(topicId: string) {
@@ -71,7 +73,6 @@ export class HomeComponent implements OnInit {
   }
 
   drop(event: CdkDragDrop<string[]>) {
-    console.log(event);
     const currOrder = this.data[event.currentIndex].order;
     this.data[event.currentIndex].order = this.data[event.previousIndex].order;
     this.data[event.previousIndex].order = currOrder;

@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -12,7 +12,8 @@ import { provideFirestore,getFirestore } from '@angular/fire/firestore';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { HomeComponent } from './home/home.component';
 
-import { NgbDropdownModule } from '@ng-bootstrap/ng-bootstrap';
+import { NgbDropdownModule, NgbAlertModule } from '@ng-bootstrap/ng-bootstrap';
+import { NgbDatepickerModule } from '@ng-bootstrap/ng-bootstrap';
 import { TopicComponent } from './topic/topic.component';
 import { DragDropModule } from '@angular/cdk/drag-drop';
 
@@ -28,6 +29,7 @@ import { WiseColorDirective } from '../app/topic/wise-color.directive';
   imports: [
     BrowserModule,
     FormsModule,
+    ReactiveFormsModule,
     AppRoutingModule,
     provideFirebaseApp(() => initializeApp(environment.firebase)),
     provideAuth(() => getAuth()),
@@ -35,6 +37,8 @@ import { WiseColorDirective } from '../app/topic/wise-color.directive';
     provideFirestore(() => getFirestore()),
     NgbModule,
     NgbDropdownModule,
+    NgbDatepickerModule,
+    NgbAlertModule,
     DragDropModule
   ],
   providers: [],
