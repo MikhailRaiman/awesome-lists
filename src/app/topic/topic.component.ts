@@ -15,23 +15,34 @@ export class TopicComponent implements OnInit {
   @Output() setFavouriteHandler = new EventEmitter();
   @Output() saveAction = new EventEmitter();
   form: FormGroup = new FormGroup({});
+  itemEdited: Item | undefined;
   editMode: boolean = false;
   model!: NgbDateStruct;
 	date!: { year: number; month: number };
   constructor(private calendar: NgbCalendar) {}
 
   ngOnInit(): void {
+    this.form = this.createFormObject();
+  }
+
+  createFormObject(item?: Item): FormGroup {
     const formOpts: any = {name: new FormControl('')};
     if (this.topic!.d) {
-      formOpts.date = new FormControl('');
+      formOpts.date = item ? new FormControl(item.date) : new FormControl('');
     }
     if (this.topic!.v) {
-      formOpts.value = new FormControl('');
+      formOpts.value = item ? new FormControl(item.value) : new FormControl('');
     }
     if (this.topic!.c) {
-      formOpts.category = new FormControl('');
+      formOpts.category = item ? new FormControl(item.category) : new FormControl('');
     }
-    this.form = new FormGroup(formOpts);
+    if (this.topic!.n) {
+      formOpts.name = item ? new FormControl(item.name) : new FormControl('');
+    }
+    if (item) {
+      formOpts.ts = new FormControl(item.ts);
+    }
+    return new FormGroup(formOpts);
   }
 
   getTextColor() {
@@ -55,14 +66,21 @@ export class TopicComponent implements OnInit {
     this.editMode = true;
   }
 
-  addTopicItem() {
+  addTopicItem(existingItem?: Item) {
     if (this.form.valid) {
-      const it = {...this.form.value};
-      it.ts = Date.now().toString();
-      this.topic?.items.push(it);
-      if (this.form.value.category) {
-        if (this.topic!.categories!.length === 0 || !this.topic!.categories!.includes(this.form.value.category)) {
-          this.topic!.categories!.push(this.form.value.category);
+      if (!existingItem) {
+        const it = {...this.form.value};
+        it.ts = Date.now().toString();
+        this.topic?.items.push(it);
+        if (this.form.value.category) {
+          if (this.topic!.categories!.length === 0 || !this.topic!.categories!.includes(this.form.value.category)) {
+            this.topic!.categories!.push(this.form.value.category);
+          }
+        }
+      } else {
+        const ind = this.topic?.items.findIndex(item => existingItem.ts === item.ts);
+        if (ind !== undefined && ind !== -1) {
+          this.topic!.items[ind] = {...this.form.value};
         }
       }
       this.saveAction.emit(this.topic);
@@ -81,6 +99,29 @@ export class TopicComponent implements OnInit {
 
   getTotalValue() {
     return this.topic!.items!.map(itm => itm.value).reduce((pr, curr) => pr! + curr!, 0);
+  }
+
+  completeItems() {
+    this.topic!.items.forEach(item => {
+      if (item.selected) {
+        item.selected = false;
+        item.done = true;
+      }
+    });
+    this.saveAction.emit(this.topic);
+  }
+
+  editItemMode() {
+    this.itemEdited = this.topic!.items.find(i => i.selected);
+    if (this.itemEdited) {
+      this.itemEdited.selected = false;
+      this.form = this.createFormObject(this.itemEdited);
+    }
+  }
+
+  saveItem() {
+    this.addTopicItem(this.itemEdited);
+    this.itemEdited!.selected = false;
   }
 
 }

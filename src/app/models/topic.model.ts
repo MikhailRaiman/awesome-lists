@@ -11,6 +11,8 @@ export class Topic {
   v = false;
   categories?: string[] = [];
   items: Item[] = [];
+  calcTotal = false;
+  completable = false;
 
   constructor(name: string, owner: string) {
     this.name = name;
@@ -25,4 +27,5 @@ export class Item {
   date?: any;
   value?: number;
   selected = false;
+  done = false;
 }

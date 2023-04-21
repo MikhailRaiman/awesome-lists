@@ -50,10 +50,23 @@
           </label>
         </div>
       </div>
-
-
+      <div class="d-flex mb-3 justify-content-between">
+        <div class="form-check" *ngIf="newTopicOptions.val">
+          <input class="form-check-input" type="checkbox" [(ngModel)]="newTopicOptions.calcTotal" id="calcOption" name="calcOption">
+          <label class="form-check-label" for="calcOption">
+            Calculate Total
+          </label>
+        </div>
+        <div class="form-check" *ngIf="newTopicOptions.name">
+          <input class="form-check-input" type="checkbox" [(ngModel)]="newTopicOptions.completable" id="comOption" name="comOption">
+          <label class="form-check-label" for="comOption">
+            Items can be completed
+          </label>
+        </div>
+      </div>
 		</form>
-    <div class="card">
+
+    <div class="card mb-3">
       <div class="card-body"  style="background-color: '#ffc784'">
         <h6 class="card-title d-flex align-items-center">
           <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-person-square" viewBox="0 0 16 16">
@@ -80,6 +93,10 @@
           <span role="button" class="mx-2">Log out</span>
         </div>
       </div>
+    </div>
+
+    <div class="d-grid gap-2 mb-3">
+      <button class="btn btn-primary" (click)="sync()">Sync with ServiceNow</button>
     </div>
 
 	</div>

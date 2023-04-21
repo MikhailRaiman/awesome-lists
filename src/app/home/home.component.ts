@@ -12,7 +12,7 @@ import { AuthService } from '../auth/auth.service';
 })
 export class HomeComponent implements OnInit {
   data: Topic[] = [];
-  newTopicOptions = {date: false, cat: false, val: false, name: false};
+  newTopicOptions = {date: false, cat: false, val: false, name: false, calcTotal: false, completable: false};
   constructor(private offcanvasService: NgbOffcanvas, public ds: DataService, public auth: AuthService) { }
 
   ngOnInit(): void {
@@ -46,7 +46,9 @@ export class HomeComponent implements OnInit {
       t.c = this.newTopicOptions.cat;
       t.v = this.newTopicOptions.val;
       t.n = this.newTopicOptions.name;
-      this.newTopicOptions = {date: false, cat: false, val: false, name: false};
+      t.calcTotal = this.newTopicOptions.calcTotal;
+      t.completable = this.newTopicOptions.completable;
+      this.newTopicOptions = {date: false, cat: false, val: false, name: false, calcTotal: false, completable: false};
       this.ds.addTopic(t);
       nameControl.value = "";
     }
@@ -80,5 +82,9 @@ export class HomeComponent implements OnInit {
     this.ds.updateTopic(this.data[event.currentIndex]);
     this.ds.updateTopic(this.data[event.previousIndex]);
     moveItemInArray(this.data, event.previousIndex, event.currentIndex);
+  }
+
+  sync() {
+    this.ds.syncServiceNow(this.data);
   }
 }
