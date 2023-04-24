@@ -77,12 +77,25 @@
         </h6>
         <p>ID: {{auth.user!.uid}}</p>
         <p>Email: {{auth.user!.email}}</p>
-        <div class="mb-3">
-          <div class="input-group">
-            <input #profilename id="profile-name" class="form-control" disabled name="profile-name" [value]="auth.user!.name" placeholder="Name"/>
-            <button class="btn btn-outline-secondary bi bi-calendar3" disabled (click)="changeProfileName(profilename)" type="button">Change</button>
+
+        <form [formGroup]="profileForm">
+          <div class="mb-3">
+            <div class="input-group">
+              <input #profilename id="profile-name" class="form-control" disabled name="profile-name" [value]="auth.user!.name" placeholder="Name"/>
+            </div>
           </div>
-        </div>
+          <div class="input-group mb-3">
+            <input placeholder="ServiceNow Endpoint" type="text" formControlName="sn_endpoint" class="form-control" id="sn-endpoint" aria-describedby="sn-endpoint">
+          </div>
+          <div class="input-group mb-3">
+            <input placeholder="SN User" type="text" class="form-control" formControlName="sn_login" id="sn-user" aria-describedby="sn-user">
+          </div>
+          <div class="input-group mb-3">
+            <input placeholder="SN Password" type="password" class="form-control" formControlName="sn_pass" id="sn-password" aria-describedby="sn-password">
+          </div>
+
+          <button class="btn btn-outline-secondary bi bi-calendar3" (click)="changeProfile()" type="button">Change</button>
+        </form>
       </div>
       <div class="card-footer">
         <div class="d-flex align-items-center" (click)="logout()">

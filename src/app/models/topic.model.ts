@@ -13,6 +13,7 @@ export class Topic {
   items: Item[] = [];
   calcTotal = false;
   completable = false;
+  last_updated = '';
 
   constructor(name: string, owner: string) {
     this.name = name;

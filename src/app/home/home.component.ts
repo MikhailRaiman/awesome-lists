@@ -4,6 +4,7 @@ import { Topic } from '../models/topic.model';
 import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 import { DataService } from '../data.service';
 import { AuthService } from '../auth/auth.service';
+import { FormControl, FormGroup, NgForm } from '@angular/forms';
 
 @Component({
   selector: 'app-home',
@@ -13,7 +14,15 @@ import { AuthService } from '../auth/auth.service';
 export class HomeComponent implements OnInit {
   data: Topic[] = [];
   newTopicOptions = {date: false, cat: false, val: false, name: false, calcTotal: false, completable: false};
-  constructor(private offcanvasService: NgbOffcanvas, public ds: DataService, public auth: AuthService) { }
+  profileForm: FormGroup;
+  constructor(private offcanvasService: NgbOffcanvas, public ds: DataService, public auth: AuthService) {
+    this.profileForm = new FormGroup({
+      name: new FormControl(this.auth.user!.name),
+      sn_endpoint: new FormControl(this.auth.user!.sn_endpoint),
+      sn_login: new FormControl(this.auth.user!.sn_login),
+      sn_pass: new FormControl(this.auth.user!.sn_pass)
+    });
+  }
 
   ngOnInit(): void {
     this.ds.getUserTopics();
@@ -71,8 +80,9 @@ export class HomeComponent implements OnInit {
     }
   }
 
-  changeProfileName(nameControl: any) {
-
+  changeProfile() {
+    console.log(this.profileForm);
+    this.ds.updateUser(this.profileForm.value);
   }
 
   drop(event: CdkDragDrop<string[]>) {

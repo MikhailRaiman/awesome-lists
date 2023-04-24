@@ -7,6 +7,7 @@ import { AuthService } from "./auth/auth.service";
 import { HttpClient } from '@angular/common/http';
 import { HttpHeaders } from '@angular/common/http';
 import { Buffer } from 'buffer';
+import { User } from "./auth/user.model";
 
 @Injectable({
   providedIn: 'root',
@@ -31,7 +32,17 @@ export class DataService {
 
     async updateTopic(t: Topic) {
       const topicRef = doc(this.firestore, "topics", t.id);
+      const date = new Date().toLocaleString();
+      t.last_updated = date;
       await updateDoc(topicRef, {...t});
+    }
+
+    async updateUser(pfv: any) {
+      this.auth.user!.sn_endpoint = pfv.sn_endpoint;
+      this.auth.user!.sn_login = pfv.sn_login;
+      this.auth.user!.sn_pass = pfv.sn_pass;
+      const topicRef = doc(this.firestore, "users", this.auth.user!.uid);
+      await updateDoc(topicRef, {...this.auth.user});
     }
 
     async deleteTopic(t: Topic) {
@@ -39,12 +50,14 @@ export class DataService {
     }
 
     syncServiceNow(data: Topic[]) {
-      const snUrl = 'https://dev135947.service-now.com/api/now/table/x_979930_ali_data_bridge';
-      const authStr = 'admin'+':'+'jINY^3y5hMl!';
-      const buff = Buffer.from(authStr, 'base64');
-      //const str = buff.toString('base64');
-      const str = 'Basic ' + window.btoa('admin' + ':' + 'jINY^3y5hMl!');
-      const requestBody = {'message': JSON.stringify(data)}
+      const str = 'Basic ' + window.btoa(this.auth.user!.sn_login + ':' + 'jINY^3y5hMl!');
+      const simplifiedData: any[] = [];
+      data.forEach(topic => {
+        const simpleItems = topic.items.map(i => {return {name: i.name, category: i.category, date: i.date, value: i.value}});
+        simplifiedData.push({name: topic.name, items: simpleItems})
+      });
+      console.log(simplifiedData);
+      const requestBody = {'message': JSON.stringify(simplifiedData), 'owner': this.auth.user!.uid}
       const httpOptions = {
         headers: new HttpHeaders({
           'Content-Type': 'application/json',
@@ -52,7 +65,7 @@ export class DataService {
           'Authorization': str
         })
       };
-      this.http.post(snUrl, requestBody, httpOptions).subscribe(res => {
+      this.http.post(this.auth.user!.sn_endpoint, requestBody, httpOptions).subscribe(res => {
         console.log(res);
       })
     }
