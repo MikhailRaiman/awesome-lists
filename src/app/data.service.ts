@@ -54,7 +54,7 @@ export class DataService {
       const simplifiedData: any[] = [];
       data.forEach(topic => {
         const simpleItems = topic.items.map(i => {return {name: i.name, category: i.category, date: i.date, value: i.value}});
-        simplifiedData.push({name: topic.name, items: simpleItems})
+        simplifiedData.push({name: topic.name, items: simpleItems, id: topic.id})
       });
       console.log(simplifiedData);
       const requestBody = {'message': JSON.stringify(simplifiedData), 'owner': this.auth.user!.uid}
