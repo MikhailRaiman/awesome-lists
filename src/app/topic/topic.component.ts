@@ -70,6 +70,9 @@ export class TopicComponent implements OnInit {
     if (this.form.valid) {
       if (!existingItem) {
         const it = {...this.form.value};
+        if (this.topic!.v && !it.value) {
+          it.value = 0;
+        }
         it.ts = Date.now().toString();
         this.topic?.items.push(it);
         if (this.form.value.category) {

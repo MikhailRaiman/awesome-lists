@@ -19,10 +19,9 @@
       <input *ngIf="topic.n" type="text" required aria-label="Name" class="form-control" placeholder="Name" formControlName="name">
       <input *ngIf="topic.c" [attr.list]="topic.id" required type="text" aria-label="Category" class="form-control" placeholder="Category" formControlName="category">
       <datalist [id]="topic.id">
-        <!-- <option value="cat"></option> -->
         <option *ngFor="let cat of topic.categories" [value]="cat">
       </datalist>
-      <input *ngIf="topic.v" required type="number" aria-label="Value" class="form-control" placeholder="Value" formControlName="value" style="max-width: 80px;">
+      <input *ngIf="topic.v" type="number" aria-label="Value" class="form-control" placeholder="Value" formControlName="value" style="max-width: 80px;">
       <button *ngIf="!itemEdited" class="btn btn-primary" type="button" id="button-add" (click)="addTopicItem()">Add</button>
       <button *ngIf="itemEdited" class="btn btn-success" type="button" id="button-save" (click)="saveItem()">Save</button>
     </div>
@@ -37,7 +36,7 @@
             </div>
             <div class="mb-1" [class.completed]="item.done">{{item.name}}</div>
             <small class="text-muted">{{item.category}}</small>
-            <span *ngIf="item.value" class="badge bg-primary">{{item.value}}</span>
+            <span *ngIf="item.value || item.value == 0" class="badge bg-primary">{{item.value}}</span>
           </div>
       </li>
       <p *ngIf="topic.v && topic.calcTotal" class="p-2 fw-semibold d-flex flex-row-reverse">Total: {{getTotalValue()}}</p>

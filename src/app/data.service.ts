@@ -9,12 +9,18 @@ import { HttpHeaders } from '@angular/common/http';
 import { Buffer } from 'buffer';
 import { User } from "./auth/user.model";
 
+export interface Alert {
+	type: string;
+	message: string;
+}
+
 @Injectable({
   providedIn: 'root',
  })
 export class DataService {
     topics$!: Observable<Topic[]>;
     firestore: Firestore = inject(Firestore);
+    alerts: Alert[] = [];
 
     constructor(private auth: AuthService, private http: HttpClient) {}
 
@@ -54,7 +60,7 @@ export class DataService {
       const simplifiedData: any[] = [];
       data.forEach(topic => {
         const simpleItems = topic.items.map(i => {return {name: i.name, category: i.category, date: i.date, value: i.value}});
-        simplifiedData.push({name: topic.name, items: simpleItems, id: topic.id})
+        simplifiedData.push({name: topic.name, items: simpleItems, id: topic.id, last_updated: topic.last_updated})
       });
       console.log(simplifiedData);
       const requestBody = {'message': JSON.stringify(simplifiedData), 'owner': this.auth.user!.uid}
@@ -65,8 +71,13 @@ export class DataService {
           'Authorization': str
         })
       };
-      this.http.post(this.auth.user!.sn_endpoint, requestBody, httpOptions).subscribe(res => {
+      this.http.post(this.auth.user!.sn_endpoint, requestBody, httpOptions).subscribe((res: any) => {
         console.log(res);
+        if (res.result.sys_updated_by) {
+          this.alerts.push({type: 'success', message: 'Data was processed by ' + res.result.sys_updated_by + ' on ' + res.result.sys_updated_on});
+        } else {
+          this.alerts.push({type: 'danger', message: 'Something wrong happens'});
+        }
       })
     }
 }

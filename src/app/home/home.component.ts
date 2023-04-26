@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { NgbOffcanvas } from '@ng-bootstrap/ng-bootstrap';
 import { Topic } from '../models/topic.model';
 import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
-import { DataService } from '../data.service';
+import { Alert, DataService } from '../data.service';
 import { AuthService } from '../auth/auth.service';
 import { FormControl, FormGroup, NgForm } from '@angular/forms';
 
@@ -15,6 +15,7 @@ export class HomeComponent implements OnInit {
   data: Topic[] = [];
   newTopicOptions = {date: false, cat: false, val: false, name: false, calcTotal: false, completable: false};
   profileForm: FormGroup;
+
   constructor(private offcanvasService: NgbOffcanvas, public ds: DataService, public auth: AuthService) {
     this.profileForm = new FormGroup({
       name: new FormControl(this.auth.user!.name),
@@ -97,4 +98,8 @@ export class HomeComponent implements OnInit {
   sync() {
     this.ds.syncServiceNow(this.data);
   }
+
+  close(alert: Alert) {
+		this.ds.alerts.splice(this.ds.alerts.indexOf(alert), 1);
+	}
 }
