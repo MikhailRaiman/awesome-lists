@@ -1,8 +1,9 @@
 <div class="mw-100 d-flex flex-column bg-primary-subtle text-bg-light" style="min-height: 100vh">
-  <div class="d-flex flex-row mb-3">
+  <div class="d-flex flex-row mb-3 justify-content-between align-items-center">
     <svg xmlns="http://www.w3.org/2000/svg" role="button" (click)="open(content)" width="32" height="32" fill="currentColor" class="bi bi-list m-2" viewBox="0 0 16 16">
       <path fill-rule="evenodd" d="M2.5 12a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5z"/>
     </svg>
+    <h6 class="p-2">Awesome Lists v.{{ds.version}}</h6>
   </div>
   <div class="d-flex flex-column flex-wrap w-100 justify-content-center align-items-center" cdkDropList cdkDropListOrientation="vertical" (cdkDropListDropped)="drop($event)">
     <div class="topic-card" *ngFor="let card of data; let i = index" cdkDrag style="position: relative">
@@ -10,6 +11,32 @@
         <path fill-rule="evenodd" d="M7.646.146a.5.5 0 0 1 .708 0l2 2a.5.5 0 0 1-.708.708L8.5 1.707V5.5a.5.5 0 0 1-1 0V1.707L6.354 2.854a.5.5 0 1 1-.708-.708l2-2zM8 10a.5.5 0 0 1 .5.5v3.793l1.146-1.147a.5.5 0 0 1 .708.708l-2 2a.5.5 0 0 1-.708 0l-2-2a.5.5 0 0 1 .708-.708L7.5 14.293V10.5A.5.5 0 0 1 8 10zM.146 8.354a.5.5 0 0 1 0-.708l2-2a.5.5 0 1 1 .708.708L1.707 7.5H5.5a.5.5 0 0 1 0 1H1.707l1.147 1.146a.5.5 0 0 1-.708.708l-2-2zM10 8a.5.5 0 0 1 .5-.5h3.793l-1.147-1.146a.5.5 0 0 1 .708-.708l2 2a.5.5 0 0 1 0 .708l-2 2a.5.5 0 0 1-.708-.708L14.293 8.5H10.5A.5.5 0 0 1 10 8z"/>
       </svg>
       <app-topic [topic]="card" (saveAction)="ds.updateTopic($event)" (deleteHandler)="deleteTopic($event)" (setFavouriteHandler)="makeFavourite($event)"></app-topic>
+    </div>
+    <h4 *ngIf="data.length === 0" class="w-100 d-flex justify-content-center">
+      Create your first topic&nbsp;<span (click)="open(content)" style="color: blue; cursor: pointer; font-weight: bold">here</span>
+    </h4>
+  </div>
+  <footer class="footer mt-auto">
+    <div style="color: white" class="w-100 bg-dark p-3 d-flex flex-column justify-content-center align-items-center">
+      <div><a href="https://github.com/MikhailRaiman/awesome-lists" target="_blank">Source code on github</a></div>
+      <p role="button" data-bs-toggle="modal" data-bs-target="#exampleModal">Disclaimer</p>
+    </div>
+  </footer>
+</div>
+
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Disclaimer</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        The information provided on this website is for general informational purposes only.
+        The website serves as a platform for storing personal data, and users should take appropriate measures to protect their information.
+        The website is not responsible for any damages or losses resulting from the use of personal data stored on the site.
+        Reliance on any information provided on this website is solely at your own risk.
+      </div>
     </div>
   </div>
 </div>
@@ -24,32 +51,32 @@
 			<div class="mb-3">
 				<div class="input-group">
 					<input #newtopic id="topic-name" class="form-control" name="topic-name" placeholder="New Topic Name"/>
-					<button class="btn btn-outline-secondary bi bi-calendar3" (click)="addTopic(newtopic)" type="button">Add</button>
+					<button [disabled]="!newTopicOptions.name && !newTopicOptions.cat" class="btn btn-primary" (click)="addTopic(newtopic)" type="button">Add</button>
 				</div>
 			</div>
       <div class="d-flex mb-3 justify-content-between">
         <div class="form-check">
           <input class="form-check-input" type="checkbox" [(ngModel)]="newTopicOptions.name" id="nameOption" name="nameOption">
           <label class="form-check-label" for="nameOption">
-            Name
-          </label>
-        </div>
-        <div class="form-check">
-          <input class="form-check-input" type="checkbox" [(ngModel)]="newTopicOptions.date" id="dateOption" name="dateOption">
-          <label class="form-check-label" for="dateOption">
-            Date
+            Name*
           </label>
         </div>
         <div class="form-check">
           <input #catOption class="form-check-input" type="checkbox" [(ngModel)]="newTopicOptions.cat" id="catOption" name="catOption">
           <label class="form-check-label" for="catOption">
-            Category
+            Category*
           </label>
         </div>
         <div class="form-check">
           <input #valOption class="form-check-input" type="checkbox" [(ngModel)]="newTopicOptions.val" id="valOption" name="valOption">
           <label class="form-check-label" for="valOption">
             Value
+          </label>
+        </div>
+        <div class="form-check">
+          <input class="form-check-input" type="checkbox" [(ngModel)]="newTopicOptions.date" id="dateOption" name="dateOption">
+          <label class="form-check-label" for="dateOption">
+            Date
           </label>
         </div>
       </div>
@@ -87,17 +114,33 @@
               <input #profilename id="profile-name" class="form-control" disabled name="profile-name" [value]="auth.user!.name" placeholder="Name"/>
             </div>
           </div>
-          <div class="input-group mb-3">
-            <input placeholder="ServiceNow Endpoint" type="text" formControlName="sn_endpoint" class="form-control" id="sn-endpoint" aria-describedby="sn-endpoint">
-          </div>
-          <div class="input-group mb-3">
-            <input placeholder="SN User" type="text" class="form-control" formControlName="sn_login" id="sn-user" aria-describedby="sn-user">
-          </div>
-          <div class="input-group mb-3">
-            <input placeholder="SN Password" type="password" class="form-control" formControlName="sn_pass" id="sn-password" aria-describedby="sn-password">
+          <div class="accordion" id="SN_accordion">
+            <div class="accordion-item">
+              <h6 class="accordion-header" id="headingOne">
+                <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">ServiceNow Integration</button>
+              </h6>
+              <div id="collapseOne" class="accordion-collapse collapse" aria-labelledby="headingOne" data-bs-parent="#SN_accordion">
+                <div class="accordion-body">
+                    <div class="input-group mb-3">
+                      <input required placeholder="ServiceNow Endpoint" type="text" formControlName="sn_endpoint" class="form-control" id="sn-endpoint" aria-describedby="sn-endpoint">
+                    </div>
+                    <div class="input-group mb-3">
+                      <input required placeholder="SN User" type="text" class="form-control" formControlName="sn_login" id="sn-user" aria-describedby="sn-user">
+                    </div>
+                    <div class="input-group mb-3">
+                      <input required placeholder="SN Password" type="password" class="form-control" formControlName="sn_pass" id="sn-password" aria-describedby="sn-password">
+                    </div>
+                    <div class="w-100 d-flex justify-content-center">
+                      <button class="btn btn-outline-success w-100" (click)="changeProfile()" type="button">Change</button>
+                    </div>
+                    <div class="d-grid gap-2 mt-2">
+                      <button class="btn btn-primary" [disabled]="!profileForm.valid" (click)="sync()">Sync with ServiceNow</button>
+                    </div>
+                </div>
+              </div>
+            </div>
           </div>
 
-          <button class="btn btn-outline-secondary bi bi-calendar3" (click)="changeProfile()" type="button">Change</button>
         </form>
       </div>
       <div class="card-footer">
@@ -109,10 +152,6 @@
           <span role="button" class="mx-2">Log out</span>
         </div>
       </div>
-    </div>
-
-    <div class="d-grid gap-2 mb-3">
-      <button class="btn btn-primary" (click)="sync()">Sync with ServiceNow</button>
     </div>
 
     <p *ngFor="let alert of ds.alerts">

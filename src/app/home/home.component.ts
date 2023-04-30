@@ -1,10 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { NgbOffcanvas } from '@ng-bootstrap/ng-bootstrap';
+import { NgbModal, NgbOffcanvas } from '@ng-bootstrap/ng-bootstrap';
 import { Topic } from '../models/topic.model';
 import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 import { Alert, DataService } from '../data.service';
 import { AuthService } from '../auth/auth.service';
 import { FormControl, FormGroup, NgForm } from '@angular/forms';
+import { NgbdModalContent } from '../shared/modal/modal.component';
 
 @Component({
   selector: 'app-home',
@@ -16,7 +17,7 @@ export class HomeComponent implements OnInit {
   newTopicOptions = {date: false, cat: false, val: false, name: false, calcTotal: false, completable: false};
   profileForm: FormGroup;
 
-  constructor(private offcanvasService: NgbOffcanvas, public ds: DataService, public auth: AuthService) {
+  constructor(private offcanvasService: NgbOffcanvas, public ds: DataService, public auth: AuthService, private _modalService: NgbModal) {
     this.profileForm = new FormGroup({
       name: new FormControl(this.auth.user!.name),
       sn_endpoint: new FormControl(this.auth.user!.sn_endpoint),
@@ -65,7 +66,14 @@ export class HomeComponent implements OnInit {
   }
 
   deleteTopic(topic: Topic) {
-    this.ds.deleteTopic(topic);
+    const modalRef = this._modalService.open(NgbdModalContent);
+    modalRef.componentInstance.title = 'Delete Topic action';
+    modalRef.componentInstance.message = 'Are you sure you want to delete topic "' + topic.name + '"?';
+    modalRef.dismissed.subscribe(res => {
+      if (res === 'ok') {
+        this.ds.deleteTopic(topic);
+      }
+    })
   }
 
   makeFavourite(topicId: string) {

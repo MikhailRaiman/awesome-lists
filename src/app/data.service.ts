@@ -6,7 +6,6 @@ import { Topic } from "./models/topic.model";
 import { AuthService } from "./auth/auth.service";
 import { HttpClient } from '@angular/common/http';
 import { HttpHeaders } from '@angular/common/http';
-import { Buffer } from 'buffer';
 import { User } from "./auth/user.model";
 
 export interface Alert {
@@ -18,6 +17,7 @@ export interface Alert {
   providedIn: 'root',
  })
 export class DataService {
+    version = '1.1';
     topics$!: Observable<Topic[]>;
     firestore: Firestore = inject(Firestore);
     alerts: Alert[] = [];
@@ -59,8 +59,8 @@ export class DataService {
       const str = 'Basic ' + window.btoa(this.auth.user!.sn_login + ':' + 'jINY^3y5hMl!');
       const simplifiedData: any[] = [];
       data.forEach(topic => {
-        const simpleItems = topic.items.map(i => {return {name: i.name, category: i.category, date: i.date, value: i.value}});
-        simplifiedData.push({name: topic.name, items: simpleItems, id: topic.id, last_updated: topic.last_updated})
+        const simpleItems = topic.items.map(i => {return {name: i.name, category: i.category, date: i.date, value: i.value, done: i.done}});
+        simplifiedData.push({name: topic.name, items: simpleItems, id: topic.id, last_updated: topic.last_updated, color: topic.color})
       });
       console.log(simplifiedData);
       const requestBody = {'message': JSON.stringify(simplifiedData), 'owner': this.auth.user!.uid}

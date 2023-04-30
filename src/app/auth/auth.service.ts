@@ -4,7 +4,7 @@ import { environment } from '../../environments/environment';
 import { Injectable, inject } from "@angular/core";
 import { User } from "./user.model";
 import { Preferences } from '@capacitor/preferences';
-import { Firestore, doc, getDoc, setDoc } from '@angular/fire/firestore';
+import { Firestore, addDoc, collection, doc, getDoc, setDoc } from '@angular/fire/firestore';
 import { UserCredential } from "@angular/fire/auth";
 import { Router } from "@angular/router";
 
@@ -57,7 +57,7 @@ export class AuthService {
   async setUserAndSave(userCr: UserCredential, email: string, name: string) {
     const user = userCr.user;
     this.user = new User(email, user.uid, name);
-    setDoc(doc(this.firestore, "users", user.uid), {...this.user});
+    await setDoc(doc(this.firestore, "users", user.uid), {...this.user});
   }
 
   async getUserData(uid: string) {
