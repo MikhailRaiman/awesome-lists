@@ -3,7 +3,7 @@ import { AuthService } from './auth.service';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
-import { UserCredential } from '@angular/fire/auth';
+import { GoogleAuthProvider, UserCredential } from '@angular/fire/auth';
 
 @Component({
   selector: 'app-auth',
@@ -56,6 +56,18 @@ export class AuthComponent implements OnInit {
     this.auth.authenticated = true;
     this.err = '';
     this.router.navigate(['home']);
+  }
+
+  async googleSignIn() {
+    const signInWithPopupResult = await this.auth.googleSignin();
+    //const credential = GoogleAuthProvider.credentialFromResult(signInWithPopupResult);
+    const userData = await this.auth.getUserData(signInWithPopupResult!.user!.uid);
+    if (!userData) {
+      await this.auth.setUserAndSave(signInWithPopupResult, signInWithPopupResult.user.email!, signInWithPopupResult.user.displayName!);
+      this.authSuccessfull(signInWithPopupResult!.user!.uid);
+    } else {
+      this.authSuccessfull(signInWithPopupResult!.user!.uid);
+    }
   }
 
   switchForm(mode: string) {

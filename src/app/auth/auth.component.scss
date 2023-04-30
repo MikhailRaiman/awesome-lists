@@ -4,9 +4,10 @@ div.err-msg {
 }
 
 .bkg {
-  background-image: url('../../assets/auth_bkg_2.jpg');
-  max-width: 800px;
-  margin: 0 auto;
+  background-image: url('../../assets/bkg.jpg');
+  // max-width: 800px;
+  // margin: 0 auto;
+  background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
 }

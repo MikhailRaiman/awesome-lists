@@ -17,7 +17,7 @@ export interface Alert {
   providedIn: 'root',
  })
 export class DataService {
-    version = '1.1';
+    version = '1.2';
     topics$!: Observable<Topic[]>;
     firestore: Firestore = inject(Firestore);
     alerts: Alert[] = [];

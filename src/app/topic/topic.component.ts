@@ -74,7 +74,7 @@ export class TopicComponent implements OnInit {
           it.value = 0;
         }
         it.ts = Date.now().toString();
-        this.topic?.items.push(it);
+        this.topic?.items.unshift(it);
         if (this.form.value.category) {
           if (this.topic!.categories!.length === 0 || !this.topic!.categories!.includes(this.form.value.category)) {
             this.topic!.categories!.push(this.form.value.category);
@@ -125,6 +125,14 @@ export class TopicComponent implements OnInit {
   saveItem() {
     this.addTopicItem(this.itemEdited);
     this.itemEdited!.selected = false;
+  }
+
+  checkIfAnyItemsSelected() {
+    return this.topic!.items.find(t => t.selected);
+  }
+
+  checkIfOneItemSelected() {
+    return this.topic!.items.filter(t => t.selected).length === 1;
   }
 
 }
