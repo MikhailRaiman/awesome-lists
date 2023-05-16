@@ -11,3 +11,353 @@ div.err-msg {
   background-position: center;
   background-repeat: no-repeat;
 }
+
+.component-3 {
+  align-items: center;
+  background-color: white;
+  display: flex;
+  flex-direction: column;
+  min-height: 100px;
+  min-width: 400px;
+  padding: 45px;
+  font-weight: 500;
+  font-size: 0.9rem;
+  //font-family: var (--font-family-inter);
+  font-family:"Inter"
+  // height: 568px;
+  // padding: 43px 58px;
+  // width: 480px;
+}
+
+.base-input {
+align-items: flex-start;
+flex-direction: column;
+margin-top: 24px;
+width: 360px;
+}
+
+.x2 .base {
+display: flex;
+justify-content: center;
+position: relative;
+}
+
+.label {
+align-items: flex-start;
+align-self: stretch;
+display: flex;
+gap: 4px;
+padding: 0px 0px 0px 12px;
+position: relative;
+}
+
+.base-input-label {
+align-items: center; display: flex; gap: 4px;
+padding: 0px 0px 8px; position: relative;
+width: fit-content;
+}
+
+.valign-text-middle {
+display: flex;
+flex-direction: column;
+justify-content: center;
+align-items: center;
+}
+
+.label-1 {
+letter-spacing: 0;
+line-height: 24px;
+margin-top: -1px;
+position: relative;
+white-space: nowrap;
+width: fit-content;
+}
+
+.input {
+align-items: center;
+align-self: stretch;
+background-color: var(--white);
+border: 1px solid;
+border-color: var(--shark);
+border-radius: 4px;
+display: flex;
+margin-top: -4px;
+position: relative;
+}
+
+.placeholder {
+align-items: center;
+display: flex;
+flex: 1;
+padding: 7px 12px;
+position: relative;
+}
+
+.placeholder-1 {
+letter-spacing: 0;
+line-height: 24px;
+margin-top: -1px;
+opacity: 0.7; position: relative;
+white-space: nowrap;
+width: fit-content;
+}
+
+.title {
+  color: var(--black);
+  font-family: var (--font-family-inter);
+  font-weight: 700;
+  // font-size: var(--font-size-1);
+  // font-weight: 700;
+  // letter-spacing: 0;
+  // line-height: normal;
+  // margin-right: 14px;
+  // min-height: 29px;
+  // min-width: 210px;
+}
+
+.nameexamplecom {
+flex: 1;
+letter-spacing: 0;
+line-height: 24px;
+margin-top: -1px;
+opacity: 0;
+position: relative;
+white-space: nowrap;
+}
+
+.icons {
+height: 24px;
+min-width: 24px;
+position: relative;
+}
+
+.x2-1 {
+align-items: center;
+display: flex;
+margin-right: 13px;
+margin-top: 17px;
+position: relative;
+width: fit-content;
+}
+.button {
+
+align-items: flex-start;
+border-radius: 4px;
+display: flex;
+position: relative;
+width: fit-content;
+}
+
+.base-button {
+align-items: center; border-radius: 4px;
+gap: 6px;
+padding: 6px 8px; width: fit-content;
+}
+
+.x2 .base-button-3 {
+align-items: center;
+display: flex;
+position: relative;
+}
+
+.base-button-label {
+width: fit-content;
+}
+
+.label-2 {
+color: var(--illuminating-emerald); font-family: var (--font-family-inter); font-size: var(--font-size-m);
+font-weight: 400;
+letter-spacing: 0;
+line-height: 24px;
+margin-top: 1px;
+position: relative;
+text-align: center;
+white-space: nowrap;
+width: fit-content;
+}
+
+.new-to-awesome-lists {
+color: var(--black);
+font-family: var (--font-family-inter); font-size: var (--font-size-m);
+font-weight: 400;
+letter-spacing: 0;
+line-height: 20px;
+position: relative;
+white-space: nowrap;
+width: fit-content;
+}
+
+.continue-with-google-centre-fit { align-items: flex-start;
+background-color: var(--white); border: 1px solid;
+border-color: #2125293d;
+border-radius: 10px;
+display: flex;
+margin-top: 20px;
+min-width: 360px;
+padding: 0 63px;
+}
+
+.x2 .frame {
+align-items: center;
+display: flex;
+position: relative;
+}
+
+.frame-6 {
+border-radius: 10px;
+gap: 15px;
+height: 40px;
+padding: 15px;
+width: fit-content;
+}
+
+.continue-with-google {
+color: #000000e6;
+font-family: var (--font-family-inter);
+font-size: var(--font-size-m);
+font-weight: 400;
+letter-spacing: 0;
+line-height: normal; margin-bottom: -3.5px; margin-top: -5.5px;
+position: relative;
+white-space: nowrap;
+width: fit-content;
+}
+
+.google-logo {
+height: 24px; margin-bottom: -7px; margin-top: -7px;
+min-width: 24px; position: relative;
+}
+
+.group-1 {
+align-items: center;
+align-self: flex-end;
+display: flex;
+height: 28px;
+margin-top: 8px;
+min-width: 362px;
+}
+
+.base-button-1 {
+align-self: flex-end;
+border-radius: 4px;
+gap: 6px;
+justify-content: center;
+margin-bottom: 0;
+margin-left: 93px;
+padding: 4px 12px;
+width: fit-content;
+}
+
+.label-3 {
+color: var(--illuminating-emerald); font-family: var (--font-family-inter); font-size: var(--font-size-s);
+font-weight: 400;
+letter-spacing: 0;
+line-height: 20px;
+margin-top: -1px;
+position: relative;
+text-align: center;
+white-space: nowrap;
+width: fit-content;
+}
+
+.base-check-box {
+align-items: flex-start;
+display: flex;
+gap: 4px;
+position: relative;
+width: fit-content;
+}
+
+.check-box {
+background-color: var(--illuminating-emerald);
+border: 1px solid;
+border-radius: 4px;
+height: 16px;
+min-width: 16px;
+overflow: hidden;
+position: relative;
+}
+
+.check {
+height: 12px;
+left: 2px;
+position: absolute;
+top: 2px;
+width: 12px;
+}
+
+.remember-me {
+color: #00000099;
+font-family: var (--font-family-inter);
+font-size: var (--font-size-s);
+font-weight: 400;
+height: 20px;
+letter-spacing: 0;
+line-height: 20px;
+margin-left: 9px; opacity: 0.8;
+white-space: nowrap;
+width: 85px;
+}
+
+.frame-7 {
+gap: 12px;
+margin-top: 20px;
+width: 360px;
+}
+
+.reminder {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 12px;
+  line-height: 20px;
+  display: flex;
+  align-items: center;
+  color: rgba(0, 0, 0, 0.6);
+  opacity: 0.8;
+  padding-left: 12px;
+}
+
+.or {
+  width: 16px;
+  height: 19px;
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 19px;
+  color: #000000;
+  opacity: 0.4;
+}
+
+.form-separator {
+background-color: var(--shark);
+flex: 1;
+height: 1px;
+min-width: 160px;
+position: relative;
+}
+
+.base-button-2 {
+background-color: var(--illuminating-emerald);
+border: 1px solid;
+border-radius: 4px;
+gap: 6px;
+justify-content: center;
+margin-top: 32px;
+padding: 8px 12px;
+width: 360px;
+}
+
+.label-4 {
+color: var(--white);
+font-family: var (--font-family-inter);
+font-size: var(--font-size-m);
+font-weight: 500;
+letter-spacing: 0;
+line-height: 24px;
+margin-top: 1px;
+position: relative;
+text-align: center;
+white-space: nowrap; width: fit-content;
+}

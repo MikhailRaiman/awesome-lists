@@ -1,13 +1,9 @@
-
-<div class="mw-100 vh-100 d-flex flex-column justify-content-between align-items-center text-bg-light bkg">
-  <div class="w-100 p-2 d-flex flex-column justify-content-between align-items-center" style="background-color: black">
+<div class="mw-100 vh-100 d-flex flex-column justify-content-center align-items-center text-bg-light bkg">
+  <!-- <div class="w-100 p-2 d-flex flex-column justify-content-between align-items-center" style="background-color: black">
     <h1 class="card-title" style="color:rgb(255, 237, 75)">Awesome Lists</h1>
-  </div>
-  <div class="card px-5" style="background-color: transparent; color: white; border: 1px solid white">
+  </div> -->
+  <!-- <div class="card px-5" style="background-color: transparent; color: white; border: 1px solid white">
     <div class="card-body text-center">
-      <!-- <h3 class="card-title">Awesome Lists {{auth.loginMode}}</h3> -->
-
-      <!-- <p class="card-subtitle mb-2">Your main tool to organize lists</p> -->
       <form [formGroup]="form">
         <div class="mb-2">
           <input *ngIf="auth.loginMode === 'Register'" class="form-control" required type="text" placeholder="Name" formControlName="name">
@@ -20,19 +16,180 @@
         </div>
         <button type="button" class="btn btn-primary w-100 mb-2" (click)="handleButtonClick()">{{buttonText}}</button>
       </form>
-      <!-- <div>Forgot password?</div> -->
       <button type="button" class="btn btn-secondary w-100 mb-2" (click)="googleSignIn()">
         Google Sign In
       </button>
-      <!-- <button type="button" class="btn btn-light">
-        <svg xmlns="http://www.w3.org/2000/svg" style="color: rgb(184, 0, 0)" width="20" height="20" fill="currentColor" class="bi bi-google" viewBox="0 0 16 16">
-          <path d="M15.545 6.558a9.42 9.42 0 0 1 .139 1.626c0 2.434-.87 4.492-2.384 5.885h.002C11.978 15.292 10.158 16 8 16A8 8 0 1 1 8 0a7.689 7.689 0 0 1 5.352 2.082l-2.284 2.284A4.347 4.347 0 0 0 8 3.166c-2.087 0-3.86 1.408-4.492 3.304a4.792 4.792 0 0 0 0 3.063h.003c.635 1.893 2.405 3.301 4.492 3.301 1.078 0 2.004-.276 2.722-.764h-.003a3.702 3.702 0 0 0 1.599-2.431H8v-3.08h7.545z"/>
-        </svg>
-      </button> -->
       <button *ngIf="auth.loginMode === 'Login'" type="button" class="btn btn-light w-100" (click)="switchForm('Register')">Register for Free</button>
       <div *ngIf="auth.loginMode !== 'Login'" (click)="switchForm('Login')" role="button">Back to Login</div>
       <div class="err-msg"><a *ngIf="err">{{err}}</a></div>
     </div>
+  </div> -->
+
+  <!-- <form class="component-3" #loginForm="ngForm" (ngSubmit)="handleButtonClick(loginForm)">
+    <input [(ngModel)]="email" #email="ngModel" autocomplete="username" name="email" [required]="true" type="email" class="form-control input mb-4" id="email" placeholder="name@example.com">
+    <input autocomplete="current-password" [required]="true" class="form-control" id="password" [type]="inputType" name="password" placeholder="Password">
+    <button class="btn" style="background-color: #20937B; color: white" type="submit">Log in</button>
+  </form>
+  <br> -->
+
+  <form class="component-3" #loginForm="ngForm" (ngSubmit)="handleButtonClick(loginForm)">
+    <h3 *ngIf="auth.loginMode === 'Login'" class="mb-4 fw-bold">Log in to continue</h3>
+    <h3 *ngIf="auth.loginMode === 'Register'" class="mb-4 fw-bold">Sign up to continue</h3>
+    <div class="d-flex mb-4 flex-row justify-content-center w-100">
+      <span *ngIf="auth.loginMode === 'Login'">New to Awesome lists?</span>
+      <span *ngIf="auth.loginMode === 'Register'">Already have an account?</span>
+      <span *ngIf="auth.loginMode === 'Login'" role="button" (click)="switchForm('Register')" class="text-success mx-2">Create an account</span>
+      <span *ngIf="auth.loginMode === 'Register'" role="button" (click)="switchForm('Login')" class="text-success mx-2">Log in</span>
+    </div>
+
+    <div class="label" *ngIf="auth.loginMode === 'Register'">
+      <div class="base-input-label">
+        <div class="label-1 valign-text-middle inter-normal-shark-16px">Name*</div>
+      </div>
+    </div>
+    <input *ngIf="auth.loginMode === 'Register'" [(ngModel)]="name" name="name" [required]="true" type="text" class="form-control input mb-4">
+
+    <div class="label">
+      <div class="base-input-label">
+        <div class="label-1 valign-text-middle inter-normal-shark-16px">Email address*</div>
+      </div>
+    </div>
+    <input [(ngModel)]="email" autocomplete="username" name="email" [required]="true" type="email" class="form-control input mb-4" placeholder="name@example.com">
+
+
+
+    <!-- <input type="password" class="form-control input" id="password" placeholder="Password" formControlName="password"> -->
+<!--
+    <div class="input-group mb-3">
+      <div class="input-group-prepend">
+        <span class="input-group-text" id="basic-addon1"><i class="fas fa-lock"></i></span>
+      </div>
+      <input name="password" type="password" value="" class="input form-control" id="password" placeholder="password" required="true" aria-label="password" aria-describedby="basic-addon1" />
+      <div class="input-group-append">
+        <span class="input-group-text" onclick="password_show_hide();">
+            <i class="fas fa-eye" id="show_eye"></i>
+            <i class="fas fa-eye-slash d-none" id="hide_eye"></i>
+        </span>
+      </div>
+    </div> -->
+    <!-- <div class="input-group mb-3">
+      <span class="input-group-text"><i class="fa fa-lock"></i></span>
+      <input class="form-control" id="username" name="username" placeholder="Username" value="">
+    </div> -->
+
+
+    <div class="label">
+      <div class="base-input-label">
+        <div class="label-1 valign-text-middle inter-normal-shark-16px">Password*</div>
+      </div>
+    </div>
+    <div class="input-group mb-2">
+      <input [(ngModel)]="password" autocomplete="current-password" [required]="true" class="form-control" [type]="inputType" name="password" placeholder="Password">
+      <span class="input-group-text">
+        <svg *ngIf="inputType === 'password'" (click)="toggleInputType()" style="cursor: pointer" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-eye-slash" viewBox="0 0 16 16">
+          <path d="M13.359 11.238C15.06 9.72 16 8 16 8s-3-5.5-8-5.5a7.028 7.028 0 0 0-2.79.588l.77.771A5.944 5.944 0 0 1 8 3.5c2.12 0 3.879 1.168 5.168 2.457A13.134 13.134 0 0 1 14.828 8c-.058.087-.122.183-.195.288-.335.48-.83 1.12-1.465 1.755-.165.165-.337.328-.517.486l.708.709z"/>
+          <path d="M11.297 9.176a3.5 3.5 0 0 0-4.474-4.474l.823.823a2.5 2.5 0 0 1 2.829 2.829l.822.822zm-2.943 1.299.822.822a3.5 3.5 0 0 1-4.474-4.474l.823.823a2.5 2.5 0 0 0 2.829 2.829z"/>
+          <path d="M3.35 5.47c-.18.16-.353.322-.518.487A13.134 13.134 0 0 0 1.172 8l.195.288c.335.48.83 1.12 1.465 1.755C4.121 11.332 5.881 12.5 8 12.5c.716 0 1.39-.133 2.02-.36l.77.772A7.029 7.029 0 0 1 8 13.5C3 13.5 0 8 0 8s.939-1.721 2.641-3.238l.708.709zm10.296 8.884-12-12 .708-.708 12 12-.708.708z"/>
+        </svg>
+        <svg *ngIf="inputType === 'text'" (click)="toggleInputType()" xmlns="http://www.w3.org/2000/svg" style="cursor: pointer" width="16" height="16" fill="currentColor" class="bi bi-eye-fill" viewBox="0 0 16 16">
+          <path d="M10.5 8a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0z"/>
+          <path d="M0 8s3-5.5 8-5.5S16 8 16 8s-3 5.5-8 5.5S0 8 0 8zm8 3.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7z"/>
+        </svg>
+       </span>
+    </div>
+
+    <div class="d-flex w-100 justify-content-between">
+      <!-- <div>
+        <input class="form-control" id="remember" type="checkbox" name="remember" value="">
+        <span>Remember me</span>
+      </div> -->
+      <div *ngIf="auth.loginMode === 'Register'" class="reminder mb-4">At least 6 characters</div>
+      <div *ngIf="auth.loginMode === 'Login'" class="form-check">
+        <input class="form-check-input" style="background-color: #20937B;" type="checkbox" value="" id="flexCheckDefault" name="remember" [(ngModel)]="remember">
+        <label class="form-check-label" for="flexCheckDefault" style="color: rgba(0, 0, 0, 0.6)">
+          Remember me
+        </label>
+      </div>
+      <div *ngIf="auth.loginMode === 'Login'" class="mb-4" role="button" style="color: #20937B;">Forgot your password?</div>
+    </div>
+    <div class="d-grid gap-2 w-100 mb-2">
+      <button (click)="handleButtonClick(loginForm)" *ngIf="auth.loginMode === 'Login'" class="btn" style="background-color: #20937B; color: white" type="button">Log in</button>
+      <button (click)="handleButtonClick(loginForm)" *ngIf="auth.loginMode === 'Register'" class="btn" style="background-color: #20937B; color: white" type="button">Sign up</button>
+    </div>
+    <div class="d-flex align-items-center mb-2">
+      <div class="form-separator"></div>
+      <div class="or mx-2" style="font-size: 16px;">or</div>
+      <div class="form-separator"></div>
+    </div>
+    <div class="d-grid gap-2 w-100">
+      <button (click)="googleSignIn()" class="btn btn-outline" type="button" style="border: 1px solid rgba(33, 37, 41, 0.24);">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 48 48"><path fill="#FFC107" d="M43.611 20.083H42V20H24v8h11.303c-1.649 4.657-6.08 8-11.303 8c-6.627 0-12-5.373-12-12s5.373-12 12-12c3.059 0 5.842 1.154 7.961 3.039l5.657-5.657C34.046 6.053 29.268 4 24 4C12.955 4 4 12.955 4 24s8.955 20 20 20s20-8.955 20-20c0-1.341-.138-2.65-.389-3.917z"/><path fill="#FF3D00" d="m6.306 14.691l6.571 4.819C14.655 15.108 18.961 12 24 12c3.059 0 5.842 1.154 7.961 3.039l5.657-5.657C34.046 6.053 29.268 4 24 4C16.318 4 9.656 8.337 6.306 14.691z"/><path fill="#4CAF50" d="M24 44c5.166 0 9.86-1.977 13.409-5.192l-6.19-5.238A11.91 11.91 0 0 1 24 36c-5.202 0-9.619-3.317-11.283-7.946l-6.522 5.025C9.505 39.556 16.227 44 24 44z"/><path fill="#1976D2" d="M43.611 20.083H42V20H24v8h11.303a12.04 12.04 0 0 1-4.087 5.571l.003-.002l6.19 5.238C36.971 39.205 44 34 44 24c0-1.341-.138-2.65-.389-3.917z"/></svg>
+        Continue with Google</button>
+    </div>
+  </form>
+
+  <!-- <div class="component-3">
+    <h1 class="title">Log in to continue</h1>
+    <div class="x2-1">
+      <div class="new-to-awesome-lists valign-text-middle">New to Awesome lists?</div>
+      <div class="button">
+        <div class="base-button base">
+          <div class="base-button-label base-button-3">
+            <div class="label-2 valign-text-middle">Create an
+              account</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="base-input base">
+      <div class="label">
+        <div class="base-input-label">
+          <div class="label-1 valign-text-middle inter-normal-shark-16px">Email address</div>
+        </div>
+      </div>
+      <input type="email" class="form-control input" id="email" placeholder="name@example.com" formControlName="email">
+    </div>
+    <div class="base-input base">
+      <div class="label">
+        <div class="base-input-label">
+          <div class="label-1 valign-text-middle inter-normal-shark-16px">Password</div>
+        </div>
+      </div>
+      <input type="password" class="form-control input" id="password" placeholder="Password" formControlName="password">
+    </div>
+    <div class="group-1">
+      <div class="base-check-box">
+        <div class="check-box">
+          <img class="check" src="check.svg" alt="check" />
+        </div>
+      </div>
+      <div class="remember-me valign-text-middle">Remember me</div>
+      <div class="base-button-1 base-button-3">
+        <div class="base-button-label base-button-3">
+          <div class="label-3 valign-text-middle">Forgot your password?</div>
+        </div>
+      </div>
+    </div>
+    <div class="base-button-2 base-button-3">
+      <div class="base-button-label base-button-3">
+        <div class="label-4 valign-text-middle">Log in</div>
+      </div>
+    </div>
+    <div class="frame-7 frame">
+      <div class="form-separator"></div>
+      <div class="or">or</div>
+      <div class="form-separator"></div>
+    </div>
+    <div class="continue-with-google-centre-fit">
+      <div class="frame-6 frame">
+        <img class="google-logo" src="google-logo.svg" alt="Google Logo" />
+        <div class="continue-with-google">Continue with Google</div>
+      </div>
+    </div>
   </div>
-  <div></div>
+-->
+
+  <!-- <div></div> -->
+
+
 </div>

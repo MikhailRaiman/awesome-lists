@@ -77,26 +77,34 @@ export class AuthService {
     const uid = await Preferences.get({ key: 'awesome-lists-uid'});
     const uidVal = uid.value;
     const tsVal = ts ? Number.parseInt(ts.value!) : null;
-    return uidVal && tsVal && (Date.now() - tsVal < 3600000) ? uidVal : null;
+    return uidVal && tsVal && (Date.now() < tsVal) ? uidVal : null;
   };
 
-  async setUserAndSave(userCr: UserCredential, email: string, name: string) {
+  async setUserAndSave(userCr: UserCredential, email: string, name: string, remember: boolean) {
     const user = userCr.user;
     this.user = new User(email, user.uid, name);
+    let ms = Date.now();
+    if (remember) {
+      ms = ms + 31540000000;
+    }
     await setDoc(doc(this.firestore, "users", user.uid), {...this.user});
     if (this.user) {
       await Preferences.set({key: 'awesome-lists-uid', value: user.uid});
-      await Preferences.set({key: 'awesome-lists-ts', value: Date.now().toString()});
+      await Preferences.set({key: 'awesome-lists-ts', value: ms.toString()});
     }
   }
 
-  async getUserData(uid: string) {
+  async getUserData(uid: string, remember: boolean) {
     const usrData = await getDoc(doc(this.firestore, "users", uid));
     this.user = usrData.data() as User;
     console.log(this.user);
     if (this.user) {
+      let ms = Date.now();
+      if (remember) {
+        ms = ms + 31540000000;
+      }
       await Preferences.set({key: 'awesome-lists-uid', value: uid});
-      await Preferences.set({key: 'awesome-lists-ts', value: Date.now().toString()});
+      await Preferences.set({key: 'awesome-lists-ts', value: ms.toString()});
     }
     return this.user;
   }
